@@ -15,7 +15,7 @@
 /**
  * Just a catch to provide a response at any time
  */
-Route::get('/{v1?}', function()
+Route::any('/{v1?}', function()
 {
 	return Response::json(array(
 		'status' => 'error',
