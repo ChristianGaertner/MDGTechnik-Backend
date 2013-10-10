@@ -11,49 +11,22 @@
 |
 */
 
-Route::get('/', function()
+
+/**
+ * Just a catch to provide a response at any time
+ */
+Route::get('/{v1?}', function()
 {
-	return View::make('hello');
+	return Response::json(array(
+		'status' => 'error',
+		'message' => 'No root level access possible',
+		'data' => null
+		), 405);
 });
+
 
 Route::group(array('prefix' => 'v1'), function() {
 
-	Route::post('veranstaltungen', function() {
-		echo "veranstaltung";
-	});
-
-	Route::get('veranstaltungen', function() {
-		echo "veranstaltung";
-	});
-
-	Route::put('veranstaltungen', function() {
-		echo "veranstaltung";
-	});
-
-	Route::delete('veranstaltungen', function() {
-		echo "veranstaltung";
-	});
-
-
-
-	Route::get('veranstaltungen/{id}', function($id) {
-		echo "veranstaltung ", $id;
-	})
-	->where('id', '[0-9]+');
-
-	Route::get('veranstaltungen/{id}', function($id) {
-		echo "veranstaltung ", $id;
-	})
-	->where('id', '[0-9]+');
-
-	Route::get('veranstaltungen/{id}', function($id) {
-		echo "veranstaltung ", $id;
-	})
-	->where('id', '[0-9]+');
-
-	Route::get('veranstaltungen/{id}', function($id) {
-		echo "veranstaltung ", $id;
-	})
-	->where('id', '[0-9]+');
+	Route::controller('veranstaltung/{id?}', 'v1_VeranstaltungController');
 
 });
