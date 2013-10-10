@@ -14,16 +14,28 @@ class v1_VeranstaltungController extends \BaseController {
 			return Response::json(array(
 							'status' => 'success',
 							'message' => null,
-							'data' => Veranstaltung::getAll()
+							'data' => json_decode(Veranstaltung::all())
 						));
 
 		} else {
 
+			$data = json_decode(Veranstaltung::find($id));
+
+			if ($data === null) {
+				$status = 'error';
+				$message = 'Not found';
+				$code = 404;
+			} else {
+				$status = 'success';
+				$message = null;
+				$code = 200;
+			}
+
 			return Response::json(array(
-							'status' => 'success',
-							'message' => null,
-							'data' => Veranstaltung::getSingle($id)
-						));
+							'status' => $status,
+							'message' => $message,
+							'data' => $data
+						), $code);
 
 		}
 		

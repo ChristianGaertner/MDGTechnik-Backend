@@ -2,30 +2,12 @@
 
 class Veranstaltung extends Eloquent {
 
-	public static function getAll() {
-		return array( 
-			array(
-				"name" => "Konzert 1",
-				"id" => 1
-				),
-			array(
-				"name" => "Konzert 2",
-				"id" => 2
-				),
-			array(
-				"name" => "Konzert 3",
-				"id" => 4
-				),
-			array(
-				"name" => "Konzert 5",
-				"id" => 5
-				),
-			array(
-				"name" => "Konzert 6",
-				"id" => 6
-				)
-			);
-	}
+	/**
+	 * The database table used by the model.
+	 *
+	 * @var string
+	 */
+	protected $table = 'veranstaltungen';
 
 	public static function createNew($data) {
 		$ret = new stdClass;
