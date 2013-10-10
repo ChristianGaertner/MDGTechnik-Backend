@@ -36,7 +36,25 @@ class v1_VeranstaltungController extends \BaseController {
 	 */
 	public function postIndex($id = null)
 	{
-		throw new Exception("Error Processing Request", 1);
+		if ($id !== null) {
+			
+			return Response::json(array(
+				'status' => 'error',
+				'message' => 'Cannot POST/CREATE a new resource based on resource.'
+				), 405);
+
+		} else {
+
+			// Create new record
+			$ret = Veranstaltung::createNew('DATA GOES HERE');
+
+			return Response::json(array(
+				'status' => $ret->status,
+				'message' => $ret->msg,
+				'data' => $ret->data
+				));
+
+		}
 	}
 
 	/**
