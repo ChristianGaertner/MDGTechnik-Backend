@@ -5,7 +5,8 @@
  * @package  Laravel
  * @author   Taylor Otwell <taylorotwell@gmail.com>
  */
-
+header('Access-Control-Allow-Origin: *');
+header('Access-Control-Allow-Headers: X-Requested-With');
 /*
 |--------------------------------------------------------------------------
 | Register The Auto Loader

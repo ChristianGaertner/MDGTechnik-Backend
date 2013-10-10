@@ -9,16 +9,6 @@ class Veranstaltung extends Eloquent {
 	 */
 	protected $table = 'veranstaltungen';
 
-	public static function createNew($data) {
-		$ret = new stdClass;
-		$ret->status = 'success';
-		$ret->msg = null;
-		$ret->data = array(
-			'id' => 1
-			);
-		return $ret;
-	}
-
 	public static function getSingle($id) {
 		return array(
 				"id" => $id,

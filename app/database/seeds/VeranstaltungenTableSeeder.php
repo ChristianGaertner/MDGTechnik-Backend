@@ -16,7 +16,11 @@ class VeranstaltungenTableSeeder extends Seeder {
 				"timespan" => "00:00 - 24:00",
 				"req" => "2x Mikrophon",
 				"notes" => "Alles soll blau sein!!",
-				"workers" => '1'
+				"workers" => json_encode(array(
+					'Licht' => array('Christian'),
+					'Ton' => array('Philip', 'Niloy'),
+					'Extra' => array(),
+					))
 				));
 
         Veranstaltung::create(array(
@@ -30,7 +34,11 @@ class VeranstaltungenTableSeeder extends Seeder {
 				"timespan" => "00:00 - 24:00",
 				"req" => "2x Mikrophon",
 				"notes" => "Alles soll blau sein!!",
-				"workers" => '1'
+				"workers" => json_encode(array(
+					'Licht' => array('Christian'),
+					'Ton' => array('Philip'),
+					'Extra' => array('Niloy'),
+					))
 				));
     }
 

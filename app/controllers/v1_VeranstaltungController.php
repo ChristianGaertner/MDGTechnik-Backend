@@ -31,6 +31,8 @@ class v1_VeranstaltungController extends \BaseController {
 				$code = 200;
 			}
 
+			$data->workers = json_decode($data->workers);
+
 			return Response::json(array(
 							'status' => $status,
 							'message' => $message,
@@ -57,13 +59,48 @@ class v1_VeranstaltungController extends \BaseController {
 
 		} else {
 
-			// Create new record
-			$ret = Veranstaltung::createNew('DATA GOES HERE');
+			// Validation
+			$requiredInput = array(
+				'name',
+				'author',
+				'email',
+				'loc',
+				'date',
+				'timespan',
+				'req',
+				'notes'
+				);
+			foreach ($requiredInput as $input) {
+				if (!Input::has($input)) {
+					return Response::json(array(
+						'status' => 'error',
+						'message' => 'Not all required info have been sent.',
+						'data' => null
+					), 400);
+				}
+			}
+
+			$veranstaltung = new Veranstaltung;
+			$veranstaltung->status_message 		= 'waiting review';
+			$veranstaltung->status_type 		= 'warning';
+			$veranstaltung->name				= Input::get('name');
+			$veranstaltung->author 				= Input::get('author');
+			$veranstaltung->email				= Input::get('email');
+			$veranstaltung->loc					= Input::get('loc');
+			$veranstaltung->date				= Input::get('date');
+			$veranstaltung->timespan			= Input::get('timespan');
+			$veranstaltung->req					= Input::get('req');
+			$veranstaltung->notes				= Input::get('notes');
+			$veranstaltung->workers				= 'waiting review';
+
+			$veranstaltung->save();
 
 			return Response::json(array(
-				'status' => $ret->status,
-				'message' => $ret->msg,
-				'data' => $ret->data
+				'status' => 'success',
+				'message' => null,
+				'data' => array(
+					'id' => $veranstaltung->id
+					)
 				));
 
 		}

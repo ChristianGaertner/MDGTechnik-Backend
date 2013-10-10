@@ -24,8 +24,10 @@ Route::any('/{v1?}', function()
 		), 405);
 });
 
-
 Route::group(array('prefix' => 'v1'), function() {
+
+	Route::options('{resource?}/{id?}', function() {
+	});
 
 	Route::controller('veranstaltung/{id?}', 'v1_VeranstaltungController');
 
