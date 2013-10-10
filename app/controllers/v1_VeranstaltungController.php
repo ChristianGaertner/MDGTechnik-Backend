@@ -29,9 +29,11 @@ class v1_VeranstaltungController extends \BaseController {
 				$status = 'success';
 				$message = null;
 				$code = 200;
+
+				$data->workers = json_decode($data->workers);
 			}
 
-			$data->workers = json_decode($data->workers);
+
 
 			return Response::json(array(
 							'status' => $status,
@@ -58,27 +60,39 @@ class v1_VeranstaltungController extends \BaseController {
 				), 405);
 
 		} else {
-
 			// Validation
-			$requiredInput = array(
-				'name',
-				'author',
-				'email',
-				'loc',
-				'date',
-				'timespan',
-				'req',
-				'notes'
+			$validator = Validator::make(
+				Input::all(),
+				array(
+					// 'name' => 'required|unique:veranstaltungen',
+					'author' => 'required',
+					'email' => 'required|email',
+					'loc' => 'required',
+					'date' => 'required',
+					'timespan' => 'required',
+					)
 				);
-			foreach ($requiredInput as $input) {
-				if (!Input::has($input)) {
-					return Response::json(array(
+
+			if ($validator->fails()) {
+				return Response::json(array(
 						'status' => 'error',
-						'message' => 'Not all required info have been sent.',
+						'message' => $validator->messages(),
 						'data' => null
 					), 400);
-				}
 			}
+
+			if (Input::has('req')) {
+				$req = Input::get('req');
+			} else {
+				$req = '';
+			}
+
+			if (Input::has('notes')) {
+				$notes = Input::get('notes');
+			} else {
+				$notes = '';
+			}
+					
 
 			$veranstaltung = new Veranstaltung;
 			$veranstaltung->status_message 		= 'waiting review';
@@ -89,8 +103,8 @@ class v1_VeranstaltungController extends \BaseController {
 			$veranstaltung->loc					= Input::get('loc');
 			$veranstaltung->date				= Input::get('date');
 			$veranstaltung->timespan			= Input::get('timespan');
-			$veranstaltung->req					= Input::get('req');
-			$veranstaltung->notes				= Input::get('notes');
+			$veranstaltung->req					= $req;
+			$veranstaltung->notes				= $notes;
 			$veranstaltung->workers				= 'waiting review';
 
 			$veranstaltung->save();
