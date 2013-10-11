@@ -7,7 +7,7 @@ class v1_VeranstaltungController extends \BaseController {
 	 *
 	 * @return Response
 	 */
-	public function getIndex($id = null)
+	public function postIndex($id = null)
 	{
 		if ($id === null) {
 			
@@ -50,7 +50,7 @@ class v1_VeranstaltungController extends \BaseController {
 	 *
 	 * @return Response
 	 */
-	public function postIndex($id = null)
+	public function getIndex($id = null)
 	{
 		if ($id !== null) {
 			
@@ -64,20 +64,20 @@ class v1_VeranstaltungController extends \BaseController {
 			$validator = Validator::make(
 				Input::all(),
 				array(
-					// 'name' => 'required|unique:veranstaltungen',
-					'author' => 'required',
+					'name' => 'required|unique:veranstaltungen|min:3',
+					'author' => 'required|min:5',
 					'email' => 'required|email',
-					'loc' => 'required',
-					'date' => 'required',
-					'timespan' => 'required',
+					'loc' => 'required|min:3',
+					'date' => 'required|min:4',
+					'timespan' => 'required|min:2',
 					)
 				);
 
 			if ($validator->fails()) {
 				return Response::json(array(
 						'status' => 'error',
-						'message' => $validator->messages(),
-						'data' => null
+						'message' => 'Look at the data attribute for more details',
+						'data' => json_decode($validator->messages())
 					), 400);
 			}
 
