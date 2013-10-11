@@ -165,7 +165,7 @@ class v1_VeranstaltungController extends \BaseController {
 
 			$veranstaltung = Veranstaltung::find($id);
 
-			if ($veranstaltung->key == Input::get('key')) {
+			if ($veranstaltung->key == base64_decode(Input::get('key'))) {
 				
 				$veranstaltung->delete();
 
