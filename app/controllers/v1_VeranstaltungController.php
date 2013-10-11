@@ -137,6 +137,46 @@ class v1_VeranstaltungController extends \BaseController {
 	 */
 	public function deleteIndex($id = null)
 	{
-		echo "deleteIndex";
+		if ($id === null) {
+			
+			return Response::json(array(
+					'status' => 'error',
+					'message' => 'You do not have enough permissions for performing this task',
+					'data' => null
+				), 403);
+
+		} else {
+
+			if (!Input::has('key')) {
+				return Response::json(array(
+					'status' => 'error',
+					'message' => 'Please provide the key for this event',
+					'data' => null
+				), 401);
+			}
+
+			$veranstaltung = Veranstaltung::find($id);
+
+			if ($veranstaltung->key == Input::get('key')) {
+				
+				$veranstaltung->delete();
+
+				return Response::json(array(
+					'status' => 'success',
+					'message' => 'Event has been deleted',
+					'data' => array(
+						'id' => $id
+						)
+				));
+
+			} else {
+				return Response::json(array(
+					'status' => 'error',
+					'message' => 'Wrong key',
+					'data' => null
+				), 401);
+			}
+
+		}
 	}
 }

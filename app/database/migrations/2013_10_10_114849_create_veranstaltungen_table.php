@@ -13,7 +13,7 @@ class CreateVeranstaltungenTable extends Migration {
 	{
 		Schema::create('veranstaltungen', function($table) {
 			$table->increments('id');
-			$table->string('name');
+			$table->string('name')->unique();
 			$table->string('loc');
 			$table->string('author');
 			$table->string('email');
@@ -36,7 +36,7 @@ class CreateVeranstaltungenTable extends Migration {
 	 */
 	public function down()
 	{
-		Schema::drop('veranstaltungen');
+		Schema::dropIfExists('veranstaltungen');
 	}
 
 }
