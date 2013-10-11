@@ -106,6 +106,13 @@ class v1_VeranstaltungController extends \BaseController {
 			$veranstaltung->req					= $req;
 			$veranstaltung->notes				= $notes;
 			$veranstaltung->workers				= 'waiting review';
+			$veranstaltung->key					= Hash::make(
+				Input::get('name') .
+				Input::get('email') . 
+				time() .
+				Input::get('loc') .
+				Request::getClientIp()
+				);
 
 			$veranstaltung->save();
 
@@ -113,7 +120,8 @@ class v1_VeranstaltungController extends \BaseController {
 				'status' => 'success',
 				'message' => null,
 				'data' => array(
-					'id' => $veranstaltung->id
+					'id' => $veranstaltung->id,
+					'key' => $veranstaltung->key
 					)
 				));
 

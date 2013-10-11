@@ -9,6 +9,13 @@ class Veranstaltung extends Eloquent {
 	 */
 	protected $table = 'veranstaltungen';
 
+	/**
+	 * The attributes excluded from the model's JSON form.
+	 *
+	 * @var array
+	 */
+	protected $hidden = array('key');
+
 	public static function getSingle($id) {
 		return array(
 				"id" => $id,

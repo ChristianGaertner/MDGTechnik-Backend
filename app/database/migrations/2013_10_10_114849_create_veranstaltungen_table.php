@@ -21,7 +21,6 @@ class CreateVeranstaltungenTable extends Migration {
 			$table->string('date');
 			$table->text('notes');
 			$table->text('req');
-			$table->text('status');
 			$table->text('status_type');
 			$table->text('status_message');
 			$table->string('workers');
