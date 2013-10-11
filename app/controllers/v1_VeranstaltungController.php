@@ -7,7 +7,7 @@ class v1_VeranstaltungController extends \BaseController {
 	 *
 	 * @return Response
 	 */
-	public function postIndex($id = null)
+	public function getIndex($id = null)
 	{
 		if ($id === null) {
 			
@@ -50,7 +50,7 @@ class v1_VeranstaltungController extends \BaseController {
 	 *
 	 * @return Response
 	 */
-	public function getIndex($id = null)
+	public function postIndex($id = null)
 	{
 		if ($id !== null) {
 			
