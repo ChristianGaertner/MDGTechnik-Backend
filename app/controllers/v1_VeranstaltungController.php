@@ -61,17 +61,7 @@ class v1_VeranstaltungController extends \BaseController {
 
 		} else {
 			// Validation
-			$validator = Validator::make(
-				Input::all(),
-				array(
-					'name' => 'required|unique:veranstaltungen|min:3',
-					'author' => 'required|min:5',
-					'email' => 'required|email',
-					'loc' => 'required|min:3',
-					'date' => 'required|min:4',
-					'timespan' => 'required|min:2',
-					)
-				);
+			$validator = Veranstaltung::validate(Input::all());
 
 			if ($validator->fails()) {
 				return Response::json(array(
@@ -135,9 +125,36 @@ class v1_VeranstaltungController extends \BaseController {
 	 */
 	public function putIndex($id = null)
 	{
-		$rp = array();
-		parse_str(file_get_contents('php://input'), $rp);
-		var_dump($rp);
+		$rp = RequestBody::get();
+		
+		if (empty($rp)) {
+			return Response::json(array(
+				'status' => 'success',
+				'message' => 'Nothing updated!',
+				'data' => null
+				));
+		}
+
+		$veranstaltung = Veranstaltung::find($rp['id']);
+
+		if (isset($rp['name']) && $veranstaltung->name !== $rp['name']) {
+			return Response::json(array(
+				'status' => 'error',
+				'message' => 'The name cannot be changed!',
+				'data' => null
+				), 409);
+		}
+
+		if (array_key_exists('loc', $rp) && $v = Veranstaltung::validate($rp, 'loc')) {
+			if (!$v->fails()) {
+				$veranstaltung->loc = $rp['loc'];
+			}
+		}
+
+
+
+
+
 	}
 
 	/**
