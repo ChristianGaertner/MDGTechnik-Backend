@@ -135,7 +135,9 @@ class v1_VeranstaltungController extends \BaseController {
 	 */
 	public function putIndex($id = null)
 	{
-		echo "putIndex";
+		$rp = array();
+		parse_str(file_get_contents('php://input'), $rp);
+		var_dump($rp);
 	}
 
 	/**
