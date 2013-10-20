@@ -11,6 +11,10 @@
 |
 */
 
+/**
+ * A simple status display page
+ */
+Route::any('status', 'StatusMonitor@index');
 
 /**
  * Just a catch to provide a response at any time
@@ -23,6 +27,8 @@ Route::any('/{v1?}', function()
 		'data' => null
 		), 405);
 });
+
+
 
 Route::group(array('prefix' => 'v1'), function() {
 
