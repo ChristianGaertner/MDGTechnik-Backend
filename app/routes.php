@@ -14,7 +14,9 @@
 /**
  * A simple status display page
  */
-Route::any('status', 'StatusMonitor@index');
+Route::any('status', function() {
+	return Redirect::to('http://mdgtechnik-status.herokuapp.com');
+});
 
 /**
  * Just a catch to provide a response at any time
