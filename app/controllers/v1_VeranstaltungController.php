@@ -104,7 +104,24 @@ class v1_VeranstaltungController extends \BaseController {
 				Request::getClientIp()
 				);
 
+			
 			$veranstaltung->save();
+
+			if (Input::has('selfSent')) {
+				
+				$viewVars = array(
+					'name' => Input::get('name'),
+					'author' => Input::get('author'),
+					'key' => $veranstaltung->key
+					);
+
+				// Sent email to Input::get('email')
+				Mail::send('emails.veranstaltung', $viewVars, function($message)
+				{
+					$message->to(Input::get('email'), Input::get('author'))->subject('Neue Veranstaltung eingetragen!');
+				});
+			}
+			
 
 			return Response::json(array(
 				'status' => 'success',
