@@ -11,6 +11,15 @@
 |
 */
 
+App::missing(function($exception)
+{
+    return Response::json(array(
+		'status' => 'error',
+		'message' => 'Resource and/or method not found',
+		'data' => null
+		), 405);
+});
+
 App::before(function($request)
 {
 	//
