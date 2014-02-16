@@ -38,5 +38,14 @@ Route::group(array('prefix' => 'v1'), function() {
 	});
 
 	Route::controller('veranstaltung/{id?}', 'v1_VeranstaltungController');
+	
+	// 404 Handling
+	Route::any('{resource}/{id?}', function() {
+		return Response::json(array(
+			'status' => 'Error',
+			'message' => 'Resource not found',
+			'data' => null,
+			), 404);
+	});
 
 });
